@@ -28,7 +28,18 @@ function Medicine(props) {
             quantity,
             expiry
         }
-        console.log(data);
+        let medicineData = JSON.parse(localStorage.getItem('medicine'));
+
+        let medicineArray = [];
+
+        if (medicineData == null) {
+            localStorage.setItem('medicine', JSON.stringify([data]));
+            console.log(medicineArray);
+        }else {
+            medicineData.push(data)
+            localStorage.setItem('medicine', JSON.stringify(medicineData));
+        }
+        handleClose();
     };
 
   return (
@@ -67,7 +78,7 @@ function Medicine(props) {
                     id="quantity"
                     name="quantity"
                     label="Quantity"
-                    type="email"
+                    type="email" 
                     fullWidth
                     variant="standard"
                     onChange={(e) => setQuantity(e.target.value)}
