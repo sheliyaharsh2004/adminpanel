@@ -3,6 +3,7 @@ import { Switch } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import Doctor from "./container/Doctor/Doctor";
 import Medicine from "./container/Medicine/Medicine";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
