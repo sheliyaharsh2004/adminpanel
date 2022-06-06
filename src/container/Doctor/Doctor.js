@@ -9,14 +9,17 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { DataGrid, renderActionsCell } from "@mui/x-data-grid";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useFormik, Formik, Form } from "formik";
+import * as yup from "yup";
 
 function Doctor(props) {
   const [open, setOpen] = React.useState(false);
   const [dopen, setDopen] = React.useState(false);
   const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [expiry, setExpiry] = useState("");
+  const [email, setEmail] = useState("");
+  const [sallery, setSallery] = useState("");
+  const [post, setPost] = useState("");
+  const [experience, setExperience] = useState("");
   const [datamed, setDatamed] = useState([]);
   const [rid, setRid] = useState("");
 
@@ -26,36 +29,60 @@ function Doctor(props) {
 
   const handleDopen = (id) => {
     setDopen(true);
-    setRid(id)
-  }
+    setRid(id);
+  };
 
   const handleClose = () => {
     setOpen(false);
     setDopen(false);
   };
 
-  const handlelSubmit = () => {
-    let data = {
-      id: Math.floor(Math.random() * 1000),
-      name,
-      price,
-      quantity,
-      expiry,
-    };
-    let medicineData = JSON.parse(localStorage.getItem("medicine"));
+  let schema = yup.object().shape({
+    name: yup.string().required("Please enter name"),
+    email: yup
+      .string()
+      .email("Please enter valid name")
+      .required("Please enter eamil"),
+    sallery: yup.string().required("Please enter sallery"),
+    post: yup.string().required("Please enter Post"),
+    experience: yup.string().required("Please enter experience"),
+  });
 
-    if (medicineData == null) {
-      localStorage.setItem("medicine", JSON.stringify([data]));
-    } else {
-      medicineData.push(data);
-      localStorage.setItem("medicine", JSON.stringify(medicineData));
-    }
-    handleClose();
-    getData();
-  };
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      sallery: "",
+      post: "",
+      experience: "",
+    },
+    validationSchema: schema,
+    onSubmit: values => {
+      const { name, email, sallery, post, experience } = values;
+
+      let docdata = {
+        id: Math.floor(Math.random() * 1000),
+        name,
+        email,
+        sallery,
+        post,
+        experience,
+      };
+      let doctorData = JSON.parse(localStorage.getItem("doctor"));
+
+      if (doctorData == null) {
+        localStorage.setItem("doctor", JSON.stringify([docdata]));
+      } else {
+        doctorData.push(docdata);
+        localStorage.setItem("doctor", JSON.stringify(doctorData));
+      }
+      handleClose();
+      getData();
+    },
+  });
 
   const getData = () => {
-    let getMedData = JSON.parse(localStorage.getItem("medicine"));
+    let getMedData = JSON.parse(localStorage.getItem("doctor"));
 
     if (getMedData !== null) {
       setDatamed(getMedData);
@@ -67,23 +94,24 @@ function Doctor(props) {
   }, []);
 
   const handleDelete = () => {
-    let removedata = JSON.parse(localStorage.getItem("medicine"));
+    let removedata = JSON.parse(localStorage.getItem("doctor"));
     let filterdata = removedata.filter((r, i) => r.id !== rid);
-    localStorage.setItem("medicine", JSON.stringify(filterdata));
+    localStorage.setItem("doctor", JSON.stringify(filterdata));
     getData();
     setDopen(false);
   };
 
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
-    { field: "name", headerName: "Name", width: 130 },
-    { field: "price", headerName: "Price", width: 130 },
-    { field: "quantity", headerName: "Quantity", width: 130 },
-    { field: "expiry", headerName: "Expiry", width: 130 },
+    { field: "name", headerName: "Name", width: 120 },
+    { field: "email", headerName: "Email", width: 150 },
+    { field: "sallery", headerName: "Sallery", width: 120 },
+    { field: "post", headerName: "Post", width: 120 },
+    { field: "experience", headerName: "experience", width: 120 },
     {
-      field: "action",
-      headerName: "Action",
-      width: 130,
+      field: "delete",
+      headerName: "Delete",
+      width: 70,
       renderCell: (params) => {
         return (
           <>
@@ -102,7 +130,7 @@ function Doctor(props) {
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
-        Add 
+        Doctor Data Add
       </Button>
       <div className="mt-3" style={{ height: 400, width: "100%" }}>
         <DataGrid
@@ -114,57 +142,79 @@ function Doctor(props) {
         />
       </div>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Add Medicine</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            name="name"
-            label="Name"
-            type="email"
-            fullWidth
-            variant="standard"
-            onChange={(e) => setName(e.target.value)}
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="peice"
-            name="peice"
-            label="Price"
-            type="email"
-            fullWidth
-            variant="standard"
-            onChange={(e) => setPrice(e.target.value)}
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="quantity"
-            name="quantity"
-            label="Quantity"
-            type="email"
-            fullWidth
-            variant="standard"
-            onChange={(e) => setQuantity(e.target.value)}
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="expiey"
-            name="expiry"
-            label="Expiry"
-            type="email"
-            fullWidth
-            variant="standard"
-            onChange={(e) => setExpiry(e.target.value)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handlelSubmit}>Submit</Button>
-        </DialogActions>
+        <DialogTitle>Doctor Data</DialogTitle>
+        <Formik value={formik}>
+          <Form key={formik} onSubmit={formik.handleSubmit}>
+            <DialogContent>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                name="name"
+                label="Name"
+                type="text"
+                fullWidth
+                variant="standard"
+                onChange={formik.handleChange}
+              />
+              {formik.errors.name ? <p>{formik.errors.name}</p> : null}
+              <TextField
+                autoFocus
+                margin="dense"
+                id="email"
+                name="email"
+                label="Email"
+                type="email"
+                fullWidth
+                variant="standard"
+                onChange={formik.handleChange}
+              />
+              {formik.errors.email ? <p>{formik.errors.email}</p> : null}
+              <TextField
+                autoFocus
+                margin="dense"
+                id="sallery"
+                name="sallery"
+                label="Sallery"
+                type="text"
+                fullWidth
+                variant="standard"
+                onChange={formik.handleChange}
+              />
+              {formik.errors.sallery ? <p>{formik.errors.sallery}</p> : null}
+              <TextField
+                autoFocus
+                margin="dense"
+                id="post"
+                name="post"
+                label="Post"
+                type="text"
+                fullWidth
+                variant="standard"
+                onChange={formik.handleChange}
+              />
+              {formik.errors.post ? <p>{formik.errors.post}</p> : null}
+              <TextField
+                autoFocus
+                margin="dense"
+                id="experience"
+                name="experience"
+                label="Experience"
+                type="text"
+                fullWidth
+                variant="standard"
+                onChange={formik.handleChange}
+              />
+              {formik.errors.experience ? (
+                <p>{formik.errors.experience}</p>
+              ) : null}
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>Cancel</Button>
+              <Button type="submit">Submit</Button>
+            </DialogActions>
+          </Form>
+        </Formik>
       </Dialog>
 
       <Dialog
