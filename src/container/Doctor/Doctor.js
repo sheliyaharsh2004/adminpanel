@@ -9,40 +9,42 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { DataGrid, renderActionsCell } from "@mui/x-data-grid";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from '@mui/icons-material/Edit';
 import { useFormik, Formik, Form } from "formik";
 import * as yup from "yup";
 
 function Doctor(props) {
-  const [open, setOpen] = React.useState(false);
-  const [dopen, setDopen] = React.useState(false);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [sallery, setSallery] = useState("");
-  const [post, setPost] = useState("");
-  const [experience, setExperience] = useState("");
-  const [datamed, setDatamed] = useState([]);
-  const [rid, setRid] = useState("");
+  const [open, setOpen] = useState(false);
+  const [Dopen, setDOpen] = useState(false);
+  const [editopen, setEditOpen] = useState(false);
+  const [showData, setEShowData] = useState([]);
+  const [Did, setDid] = useState('');
+  const [Editdata, setEditdata] = useState([]);
 
   const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDopen = (id) => {
-    setDopen(true);
-    setRid(id);
+      setOpen(true);
   };
 
   const handleClose = () => {
-    setOpen(false);
-    setDopen(false);
+      setOpen(false);
+      setDOpen(false);
+      setEditOpen(false);
+  };
+
+  const handleClickDOpen = (id) => {
+      setDid(id)
+      setDOpen(true);
+  };
+
+  const handleClickEOpen = (id) => {
+      setEditOpen(true);
+      console.log(id);
+      EditData(id);
   };
 
   let schema = yup.object().shape({
     name: yup.string().required("Please enter name"),
-    email: yup
-      .string()
-      .email("Please enter valid name")
-      .required("Please enter eamil"),
+    email: yup.string().email("Please enter valid name").required("Please enter eamil"),
     sallery: yup.string().required("Please enter sallery"),
     post: yup.string().required("Please enter Post"),
     experience: yup.string().required("Please enter experience"),
@@ -50,11 +52,11 @@ function Doctor(props) {
 
   const formik = useFormik({
     initialValues: {
-      name: "",
-      email: "",
-      sallery: "",
-      post: "",
-      experience: "",
+      name: '',
+      email: '',
+      sallery: '',
+      post: '',
+      experience:'',
     },
     validationSchema: schema,
     onSubmit: values => {
@@ -78,6 +80,8 @@ function Doctor(props) {
       }
       handleClose();
       getData();
+
+      // console.log(formik.errors);
     },
   });
 
@@ -117,9 +121,24 @@ function Doctor(props) {
           <>
             <IconButton
               className="border-primary"
-              onClick={() => handleDopen(params.id)}
-            >
+              onClick={() => handleDopen(params.id)}>
               <DeleteIcon />
+            </IconButton>
+          </>
+        );
+      },
+    },
+    {
+      field: "Edit",
+      headerName: "Edit",
+      width: 70,
+      renderCell: (params) => {
+        return (
+          <>
+            <IconButton
+              
+              onClick={() => handleDopen(params.id)}>
+              <EditIcon />
             </IconButton>
           </>
         );
@@ -157,7 +176,7 @@ function Doctor(props) {
                 variant="standard"
                 onChange={formik.handleChange}
               />
-              {formik.errors.name ? <p>{formik.errors.name}</p> : null}
+              {formik.errors.name ? <p error helperTex>{formik.errors.name}</p> : null}
               <TextField
                 autoFocus
                 margin="dense"
@@ -208,11 +227,11 @@ function Doctor(props) {
               {formik.errors.experience ? (
                 <p>{formik.errors.experience}</p>
               ) : null}
-            </DialogContent>
-            <DialogActions>
+              <DialogActions>
               <Button onClick={handleClose}>Cancel</Button>
               <Button type="submit">Submit</Button>
             </DialogActions>
+            </DialogContent>
           </Form>
         </Formik>
       </Dialog>
