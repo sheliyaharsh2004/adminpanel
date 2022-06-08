@@ -15,10 +15,10 @@ import * as yup from "yup";
 
 function Doctor(props) {
   const [open, setOpen] = useState(false);
-  const [Dopen, setDOpen] = useState(false);
+  const [Dopen, setDopen] = useState(false);
   const [editopen, setEditOpen] = useState(false);
   const [showData, setEShowData] = useState([]);
-  const [Did, setDid] = useState('');
+  const [did, setdid] = useState('');
   const [Editdata, setEditdata] = useState([]);
 
   const handleClickOpen = () => {
@@ -27,13 +27,13 @@ function Doctor(props) {
 
   const handleClose = () => {
       setOpen(false);
-      setDOpen(false);
+      setDopen(false);
       setEditOpen(false);
   };
 
-  const handleClickDOpen = (id) => {
-      setDid(id)
-      setDOpen(true);
+  const handleClickDopen = (id) => {
+      setdid(id)
+      setDopen(true);
   };
 
   const handleClickEOpen = (id) => {
@@ -59,7 +59,7 @@ function Doctor(props) {
       experience:'',
     },
     validationSchema: schema,
-    onSubmit: values => {
+    onSubmit: (values, { resetForm }) => {
       const { name, email, sallery, post, experience } = values;
 
       let docdata = {
@@ -80,30 +80,39 @@ function Doctor(props) {
       }
       handleClose();
       getData();
-
-      // console.log(formik.errors);
+      resetForm();
     },
   });
 
   const getData = () => {
-    let getMedData = JSON.parse(localStorage.getItem("doctor"));
+    let getEDataItem = JSON.parse(localStorage.getItem("doctor"));
 
-    if (getMedData !== null) {
-      setDatamed(getMedData);
+    if (getEDataItem !== null) {
+      setEShowData(getEDataItem);
     }
+  };
+
+  const handleDelete = () => {
+    let removedata = JSON.parse(localStorage.getItem("doctor"));
+    let filterdata = removedata.filter((r, i) => r.id !== did);
+    localStorage.setItem("doctor", JSON.stringify(filterdata));
+    getData();
+    setDopen(false);
   };
 
   useEffect(() => {
     getData();
   }, []);
 
-  const handleDelete = () => {
-    let removedata = JSON.parse(localStorage.getItem("doctor"));
-    let filterdata = removedata.filter((r, i) => r.id !== rid);
-    localStorage.setItem("doctor", JSON.stringify(filterdata));
-    getData();
-    setDopen(false);
-  };
+  const EditData = (id) => {
+    console.log(id);
+    
+    let GetEditData = JSON.parse(localStorage.getItem("doctor"));
+
+    let EData = GetEditData.filter((e,i) => e.id == id)
+
+    console.log(JSON.stringify(EData));
+  }
 
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
@@ -121,7 +130,7 @@ function Doctor(props) {
           <>
             <IconButton
               className="border-primary"
-              onClick={() => handleDopen(params.id)}>
+              onClick={() => handleClickDopen(params.id)}>
               <DeleteIcon />
             </IconButton>
           </>
@@ -137,7 +146,7 @@ function Doctor(props) {
           <>
             <IconButton
               
-              onClick={() => handleDopen(params.id)}>
+              onClick={() => handleClickEOpen(params.id)}>
               <EditIcon />
             </IconButton>
           </>
@@ -153,7 +162,7 @@ function Doctor(props) {
       </Button>
       <div className="mt-3" style={{ height: 400, width: "100%" }}>
         <DataGrid
-          rows={datamed}
+          rows={showData}
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}
@@ -176,7 +185,7 @@ function Doctor(props) {
                 variant="standard"
                 onChange={formik.handleChange}
               />
-              {formik.errors.name ? <p error helperTex>{formik.errors.name}</p> : null}
+              {formik.errors.name ? <p className="errors">{formik.errors.name}</p> : null}
               <TextField
                 autoFocus
                 margin="dense"
@@ -188,7 +197,7 @@ function Doctor(props) {
                 variant="standard"
                 onChange={formik.handleChange}
               />
-              {formik.errors.email ? <p>{formik.errors.email}</p> : null}
+              {formik.errors.email ? <p className="errors">{formik.errors.email}</p> : null}
               <TextField
                 autoFocus
                 margin="dense"
@@ -200,7 +209,7 @@ function Doctor(props) {
                 variant="standard"
                 onChange={formik.handleChange}
               />
-              {formik.errors.sallery ? <p>{formik.errors.sallery}</p> : null}
+              {formik.errors.sallery ? <p className="errors">{formik.errors.sallery}</p> : null}
               <TextField
                 autoFocus
                 margin="dense"
@@ -212,7 +221,7 @@ function Doctor(props) {
                 variant="standard"
                 onChange={formik.handleChange}
               />
-              {formik.errors.post ? <p>{formik.errors.post}</p> : null}
+              {formik.errors.post ? <p className="error">{formik.errors.post}</p> : null}
               <TextField
                 autoFocus
                 margin="dense"
@@ -224,20 +233,18 @@ function Doctor(props) {
                 variant="standard"
                 onChange={formik.handleChange}
               />
-              {formik.errors.experience ? (
-                <p>{formik.errors.experience}</p>
-              ) : null}
+              {formik.errors.experience ? <p className="errors">{formik.errors.experience}</p> : null}
               <DialogActions>
-              <Button onClick={handleClose}>Cancel</Button>
-              <Button type="submit">Submit</Button>
-            </DialogActions>
+                <Button onClick={handleClose}>Cancel</Button>
+                <Button onClick={handleClose} type="submit">Submit</Button>
+              </DialogActions>
             </DialogContent>
           </Form>
         </Formik>
       </Dialog>
 
       <Dialog
-        open={dopen}
+        open={Dopen}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
