@@ -9,6 +9,9 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { DataGrid, renderActionsCell } from "@mui/x-data-grid";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import { useFormik, Formik, Form } from "formik";
+import * as yup from "yup";
 
 function Medicine(props) {
   const [open, setOpen] = React.useState(false);
@@ -19,39 +22,100 @@ function Medicine(props) {
   const [expiry, setExpiry] = useState("");
   const [datamed, setDatamed] = useState([]);
   const [rid, setRid] = useState("");
+  const [udate, setUdate] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
-
-  const handleDopen = (id) => {
-    setDopen(true);
-    setRid(id)
-  }
 
   const handleClose = () => {
     setOpen(false);
     setDopen(false);
   };
 
-  const handlelSubmit = () => {
-    let data = {
-      id: Math.floor(Math.random() * 1000),
-      name,
-      price,
-      quantity,
-      expiry,
-    };
-    let medicineData = JSON.parse(localStorage.getItem("medicine"));
+  const handleClickDopen = (id) => {
+    setRid(id);
+    setDopen(true);
+  };
 
-    if (medicineData == null) {
-      localStorage.setItem("medicine", JSON.stringify([data]));
+  const handleClickEditOpen = (params) => {
+    console.log(params.row);
+    setRid(params.id);
+    setOpen(true);
+
+    formik.setValues({
+      name: params.row.name,
+      price: params.row.price,
+      quantity: params.row.quantity,
+      expiry: params.row.expiry,
+    });
+    setUdate(true);
+  }
+
+  let schema = yup.object().shape({
+    name: yup.string().required("Please enter name"),
+    price: yup.string().required("Please enter price"),
+    quantity: yup.string().required("Please enter quantity"),
+    expiry: yup.string().required("Please enter expiry"),
+  });
+  
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      price: "",
+      quantity: "",
+      expiry: "",
+    },
+    validationSchema: schema,
+    onSubmit: (values, { resetForm }) => {
+      const { name, price, quantity, expiry} = values;
+  
+    if (udate) {
+      Updata(values);
     } else {
-      medicineData.push(data);
-      localStorage.setItem("medicine", JSON.stringify(medicineData));
-    }
-    handleClose();
+      let data = {
+        id: Math.floor(Math.random() * 1000),
+        name,
+        price,
+        quantity,
+        expiry,
+      };
+      let medicineData = JSON.parse(localStorage.getItem("medicine"));
+
+      if (medicineData == null) {
+        localStorage.setItem("medicine", JSON.stringify([data]));
+      } else {
+        medicineData.push(data);
+        localStorage.setItem("medicine", JSON.stringify(medicineData));
+      }
+      handleClose();
+      getData();
+      resetForm();
+  };
+},
+  });
+
+  const Updata = (values) => {
+    console.log(values);
+
+    let edituData = JSON.parse(localStorage.getItem("medicine"));
+    console.log(edituData);
+
+    let upadateData = edituData.map((u) => {
+      if (u.id === did) {
+        console.log(did);
+        return { id: did, ...values };
+      } else {
+        return u;
+      }
+    });
+
+    localStorage.setItem("medicine", JSON.stringify(upadateData));
+
     getData();
+    setOpen(false);
+    setUdate(false);
+    setRid();
   };
 
   const getData = () => {
@@ -62,16 +126,26 @@ function Medicine(props) {
     }
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
-
   const handleDelete = () => {
     let removedata = JSON.parse(localStorage.getItem("medicine"));
     let filterdata = removedata.filter((r, i) => r.id !== rid);
     localStorage.setItem("medicine", JSON.stringify(filterdata));
     getData();
     setDopen(false);
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const EditData = (id) => {
+    console.log(id);
+
+    let GetEditData = JSON.parse(localStorage.getItem("medicine"));
+
+    let EData = GetEditData.filter((e, i) => e.id == id);
+
+    console.log(JSON.stringify(EData));
   };
 
   const columns = [
@@ -83,15 +157,17 @@ function Medicine(props) {
     {
       field: "action",
       headerName: "Action",
-      width: 130,
+      width: 100,
       renderCell: (params) => {
         return (
           <>
             <IconButton
               className="border-primary"
-              onClick={() => handleDopen(params.id)}
-            >
+              onClick={() => handleDopen(params.id)}>
               <DeleteIcon />
+            </IconButton>
+            <IconButton onClick={() => handleClickEditOpen(params)}>
+              <EditIcon />
             </IconButton>
           </>
         );
