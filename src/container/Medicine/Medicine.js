@@ -16,6 +16,7 @@ import * as yup from "yup";
 function Medicine(props) {
   const [open, setOpen] = React.useState(false);
   const [dopen, setDopen] = React.useState(false);
+  const [showData, setEShowData] = useState([]);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -50,7 +51,7 @@ function Medicine(props) {
       expiry: params.row.expiry,
     });
     setUdate(true);
-  }
+  };
 
   let schema = yup.object().shape({
     name: yup.string().required("Please enter name"),
@@ -58,7 +59,7 @@ function Medicine(props) {
     quantity: yup.string().required("Please enter quantity"),
     expiry: yup.string().required("Please enter expiry"),
   });
-  
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -68,31 +69,31 @@ function Medicine(props) {
     },
     validationSchema: schema,
     onSubmit: (values, { resetForm }) => {
-      const { name, price, quantity, expiry} = values;
-  
-    if (udate) {
-      Updata(values);
-    } else {
-      let data = {
-        id: Math.floor(Math.random() * 1000),
-        name,
-        price,
-        quantity,
-        expiry,
-      };
-      let medicineData = JSON.parse(localStorage.getItem("medicine"));
+      const { name, price, quantity, expiry } = values;
 
-      if (medicineData == null) {
-        localStorage.setItem("medicine", JSON.stringify([data]));
+      if (udate) {
+        Updata(values);
       } else {
-        medicineData.push(data);
-        localStorage.setItem("medicine", JSON.stringify(medicineData));
+        let data = {
+          id: Math.floor(Math.random() * 1000),
+          name,
+          price,
+          quantity,
+          expiry,
+        };
+        let medicineData = JSON.parse(localStorage.getItem("medicine"));
+
+        if (medicineData == null) {
+          localStorage.setItem("medicine", JSON.stringify([data]));
+        } else {
+          medicineData.push(data);
+          localStorage.setItem("medicine", JSON.stringify(medicineData));
+        }
+        handleClose();
+        getData();
+        resetForm();
       }
-      handleClose();
-      getData();
-      resetForm();
-  };
-},
+    },
   });
 
   const Updata = (values) => {
@@ -102,9 +103,9 @@ function Medicine(props) {
     console.log(edituData);
 
     let upadateData = edituData.map((u) => {
-      if (u.id === did) {
-        console.log(did);
-        return { id: did, ...values };
+      if (u.id === rid) {
+        console.log(rid);
+        return { id: rid, ...values };
       } else {
         return u;
       }
@@ -163,7 +164,8 @@ function Medicine(props) {
           <>
             <IconButton
               className="border-primary"
-              onClick={() => handleDopen(params.id)}>
+              onClick={() => handleClickDopen(params.id)}
+            >
               <DeleteIcon />
             </IconButton>
             <IconButton onClick={() => handleClickEditOpen(params)}>
@@ -182,7 +184,7 @@ function Medicine(props) {
       </Button>
       <div className="mt-3" style={{ height: 400, width: "100%" }}>
         <DataGrid
-          rows={datamed}
+          rows={showData}
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}
@@ -191,56 +193,76 @@ function Medicine(props) {
       </div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add Medicine</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            name="name"
-            label="Name"
-            type="email"
-            fullWidth
-            variant="standard"
-            onChange={(e) => setName(e.target.value)}
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="peice"
-            name="peice"
-            label="Price"
-            type="email"
-            fullWidth
-            variant="standard"
-            onChange={(e) => setPrice(e.target.value)}
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="quantity"
-            name="quantity"
-            label="Quantity"
-            type="email"
-            fullWidth
-            variant="standard"
-            onChange={(e) => setQuantity(e.target.value)}
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="expiey"
-            name="expiry"
-            label="Expiry"
-            type="email"
-            fullWidth
-            variant="standard"
-            onChange={(e) => setExpiry(e.target.value)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handlelSubmit}>Submit</Button>
-        </DialogActions>
+        <Formik value={formik}>
+          <Form key={formik} onSubmit={formik.handleSubmit}>
+            <DialogContent>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                name="name"
+                value={formik.values.name}
+                label="Name"
+                type="text"
+                fullWidth
+                variant="standard"
+                onChange={formik.handleChange}
+              />
+              {formik.errors.name ? (
+                <p className="errors">{formik.errors.name}</p>
+              ) : null}
+              <TextField
+                autoFocus
+                margin="dense"
+                id="peice"
+                name="peice"
+                value={formik.values.peice}
+                label="Price"
+                type="text"
+                fullWidth
+                variant="standard"
+                onChange={formik.handleChange}
+              />
+              {formik.errors.name ? (
+                <p className="errors">{formik.errors.peice}</p>
+              ) : null}
+              <TextField
+                autoFocus
+                margin="dense"
+                id="quantity"
+                name="quantity"
+                value={formik.values.quantity}
+                label="Quantity"
+                type="text"
+                fullWidth
+                variant="standard"
+                onChange={formik.handleChange}
+              />
+              {formik.errors.name ? (
+                <p className="errors">{formik.errors.quantity}</p>
+              ) : null}
+              <TextField
+                autoFocus
+                margin="dense"
+                id="expiey"
+                name="expiry"
+                value={formik.values.expiry}
+                label="Expiry"
+                type="text"
+                fullWidth
+                variant="standard"
+                onChange={formik.handleChange}
+              />
+              {formik.errors.name ? (
+                <p className="errors">{formik.errors.expiry}</p>
+              ) : null}
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>Cancel</Button>
+              <Button type="submit">Submit</Button>
+            </DialogActions>
+          </Form>
+        </Formik>
       </Dialog>
 
       <Dialog
@@ -249,12 +271,12 @@ function Medicine(props) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-      <DialogTitle id="alert-dialog-title">
-        {"Are You Sure Delete Data?"}
-      </DialogTitle>
+        <DialogTitle id="alert-dialog-title">
+          {"Are You Sure Delete Data?"}
+        </DialogTitle>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button  onClick={() => handleDelete()} autoFocus>
+          <Button onClick={() => handleDelete()} autoFocus>
             yes
           </Button>
         </DialogActions>
