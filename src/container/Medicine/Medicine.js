@@ -144,7 +144,7 @@ function Medicine(props) {
 
     let GetEditData = JSON.parse(localStorage.getItem("medicine"));
 
-    let EData = GetEditData.filter((e, i) => e.id == id);
+    let EData = GetEditData.filter((e, i) => e.id === id);
 
     console.log(JSON.stringify(EData));
   };

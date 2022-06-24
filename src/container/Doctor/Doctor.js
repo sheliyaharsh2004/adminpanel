@@ -18,6 +18,7 @@ function Doctor(props) {
   const [showData, setEShowData] = useState([]);
   const [did, setdid] = useState("");
   const [udate, setUdate] = useState(false);
+  const [filterdata, setFilterdata] = useState([]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -190,14 +191,41 @@ function Doctor(props) {
     },
   ];
 
+  const handlesearch = (Dr) => {
+    let medsearch = JSON.parse(localStorage.getItem("doctor"))
+      let fdata = medsearch.filter((f) => (
+
+        f.id.toString().includes(Dr) ||
+        f.name.toString().includes(Dr) ||
+        f.price.toString().includes(Dr) ||
+        f.quantity.toString().includes(Dr) ||
+        f.expiry.toString().includes(Dr) 
+      ))
+      setFilterdata(fdata)
+      console.log(fdata);
+      console.log(Dr);
+  }
+
   return (
     <div>
+      <TextField
+        autoFocus
+        margin="dense"
+        id="search"
+        name="search"
+        label="search"
+        type="text"
+        fullWidth
+        variant="standard"
+        onChange={(e) => handlesearch(e.target.value)}
+        
+      />
       <Button variant="outlined" onClick={handleClickOpen}>
         Doctor Data Add
       </Button>
       <div className="mt-3" style={{ height: 400, width: "100%" }}>
         <DataGrid
-          rows={showData}
+          rows={filterdata}
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}
