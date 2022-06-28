@@ -89,7 +89,7 @@ function Medicine(props) {
           medicineData.push(data);
           localStorage.setItem("medicine", JSON.stringify(medicineData));
         }
-        handleClose();
+      setOpen(false);
         getData();
         resetForm();
       }
@@ -194,7 +194,7 @@ function Medicine(props) {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add Medicine</DialogTitle>
         <Formik value={formik}>
-          <Form key={formik} onSubmit={formik.handleSubmit}>
+          <Form  onSubmit={formik.handleSubmit}>
             <DialogContent>
               <TextField
                 autoFocus

@@ -19,6 +19,7 @@ function Doctor(props) {
   const [did, setdid] = useState("");
   const [udate, setUdate] = useState(false);
   const [filterdata, setFilterdata] = useState([]);
+  const [datamed, setDatamed] = useState([]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -91,8 +92,9 @@ function Doctor(props) {
           doctorData.push(docdata);
           localStorage.setItem("doctor", JSON.stringify(doctorData));
         }
-        handleClose();
         getData();
+        setDatamed();
+        handleClose();
         resetForm();
       }
     },
@@ -146,7 +148,7 @@ function Doctor(props) {
 
     let GetEditData = JSON.parse(localStorage.getItem("doctor"));
 
-    let EData = GetEditData.filter((e, i) => e.id == id);
+    let EData = GetEditData.filter((e, i) => e.id !== id);
 
     console.log(JSON.stringify(EData));
   };
@@ -206,6 +208,8 @@ function Doctor(props) {
       console.log(Dr);
   }
 
+  const filter = filterdata.length > 0 ? filterdata : datamed
+
   return (
     <div>
       <TextField
@@ -225,7 +229,7 @@ function Doctor(props) {
       </Button>
       <div className="mt-3" style={{ height: 400, width: "100%" }}>
         <DataGrid
-          rows={filterdata}
+          rows={datamed}
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}
