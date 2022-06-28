@@ -229,7 +229,7 @@ function Doctor(props) {
       </Button>
       <div className="mt-3" style={{ height: 400, width: "100%" }}>
         <DataGrid
-          rows={datamed}
+          rows={filter}
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}
