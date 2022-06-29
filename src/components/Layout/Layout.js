@@ -21,6 +21,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
 import PersonIcon from "@mui/icons-material/Person";
 import { NavLink } from "react-router-dom";
+import HourglassFullIcon from '@mui/icons-material/HourglassFull';
 
 const drawerWidth = 240;
 
@@ -104,6 +105,7 @@ export default function Layout({ children }) {
   const sidebar = [
     { label: "Medicine", to: "/medicine", icon: <MedicalServicesIcon /> },
     { label: "Doctor", to: "/doctor", icon: <PersonIcon /> },
+    { label: "Counter", to: "/counter", icon: <HourglassFullIcon /> },
   ];
 
   return (

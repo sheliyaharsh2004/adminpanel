@@ -16,7 +16,7 @@ import * as yup from "yup";
 function Medicine(props) {
   const [open, setOpen] = React.useState(false);
   const [dopen, setDopen] = React.useState(false);
-  const [showData, setEShowData] = useState([]);
+  const [showData, setEShowData] = useState([]);  
   const [datamed, setDatamed] = useState([]);
   const [rid, setRid] = useState("");
   const [udate, setUdate] = useState(false);
