@@ -6,7 +6,8 @@ import Medicine from "./container/Medicine/Medicine";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Counter from "./container/Counter/Counter";
 import { Provider } from "react-redux";
-import { counterStore } from "./container/Redux/Store";
+import { counterStore } from "./Redux/Store";
+
 
 function App() {
 
