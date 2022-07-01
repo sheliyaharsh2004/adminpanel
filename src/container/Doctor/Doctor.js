@@ -15,7 +15,6 @@ import * as yup from "yup";
 function Doctor(props) {
   const [open, setOpen] = useState(false);
   const [Dopen, setDopen] = useState(false);
-  const [showData, setEShowData] = useState([]);
   const [did, setdid] = useState("");
   const [udate, setUdate] = useState(false);
   const [filterdata, setFilterdata] = useState([]);
@@ -127,7 +126,7 @@ function Doctor(props) {
     let getEDataItem = JSON.parse(localStorage.getItem("doctor"));
 
     if (getEDataItem !== null) {
-      setEShowData(getEDataItem);
+      setDatamed(getEDataItem);
     }
   };
 
@@ -199,9 +198,10 @@ function Doctor(props) {
 
         f.id.toString().includes(Dr) ||
         f.name.toString().includes(Dr) ||
-        f.price.toString().includes(Dr) ||
-        f.quantity.toString().includes(Dr) ||
-        f.expiry.toString().includes(Dr) 
+        f.email.toString().includes(Dr) ||
+        f.sallery.toString().includes(Dr) ||
+        f.post.toString().includes(Dr) ||
+        f.experience.toString().includes(Dr)
       ))
       setFilterdata(fdata)
       console.log(fdata);
