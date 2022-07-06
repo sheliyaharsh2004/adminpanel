@@ -4,7 +4,6 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { DataGrid, renderActionsCell } from "@mui/x-data-grid";
 import IconButton from "@mui/material/IconButton";
@@ -12,6 +11,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { useFormik, Formik, Form } from "formik";
 import * as yup from "yup";
+import { useDispatch, useSelector } from 'react-redux';
+import { medicinedata } from "../../Redux/Action/medicine.action";
 
 function Medicine(props) {
   const [open, setOpen] = React.useState(false);
@@ -20,6 +21,10 @@ function Medicine(props) {
   const [datamed, setDatamed] = useState([]);
   const [rid, setRid] = useState("");
   const [udate, setUdate] = useState(false);
+  const dispatch = useDispatch()
+
+  const medicines = useSelector (state => state.medicine);
+  console.log(medicines);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -127,11 +132,13 @@ function Medicine(props) {
     let removedata = JSON.parse(localStorage.getItem("medicine"));
     let filterdata = removedata.filter((r, i) => r.id !== rid);
     localStorage.setItem("medicine", JSON.stringify(filterdata));
+    
     getData();
     setDopen(false);
   };
 
   useEffect(() => {
+    dispatch(medicinedata())
     getData();
   }, []);
 
