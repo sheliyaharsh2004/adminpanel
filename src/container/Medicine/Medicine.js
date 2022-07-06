@@ -24,7 +24,7 @@ function Medicine(props) {
   const dispatch = useDispatch()
 
   const medicines = useSelector (state => state.medicine);
-  console.log(medicines);
+  console.log(medicines.medicine);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -121,11 +121,8 @@ function Medicine(props) {
   };
 
   const getData = () => {
-    let getMedData = JSON.parse(localStorage.getItem("medicine"));
-
-    if (getMedData !== null) {
-      setDatamed(getMedData);
-    }
+    
+    setDatamed(medicines.medicine);
   };
 
   const handleDelete = () => {
@@ -181,13 +178,17 @@ function Medicine(props) {
   ];
 
   return (
+    medicines.isLoading ?
+    <p>Loading...</p>
+    :
+    
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
         Add Medicine
       </Button>
       <div className="mt-3" style={{ height: 400, width: "100%" }}>
         <DataGrid
-          rows={showData}
+          rows={medicines.medicine}
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}
