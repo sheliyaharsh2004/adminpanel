@@ -1,4 +1,2 @@
 export const INCREMENTED = 'INCREMENTED'
 export const DECREMENTED = 'DECREMENTED'
-
-export const GET_MEDICINE ="GET_MEDICINE"
