@@ -12,22 +12,28 @@ export const medicineReducer = (state = initalstate, action) => {
             return {
                 ...state,
                 isLoading: true,
-                medicine: [],
                 error: ""
             }
         case ActionType.GET_MEDICINE:
             return {
                 ...state,
-                isLoaing: false,
+                isLoading: false,
                 medicine: action.payload,
-                error: "",
-            };
+                error: ""
+            }
+            case ActionType.POST_MEDICINE:
+            return {
+                ...state,
+                isLoading: false,
+                medicine: state.medicine.concat(action.payload),
+                error: ""
+            }
         case ActionType.ERROR_MEDICINE:
             return {
                 ...state,
-                isLoaing: false,
+                isLoading: false,
                 medicine: [],
-                error: ""
+                error: action.payload
                 }
             default:
                 return state;
