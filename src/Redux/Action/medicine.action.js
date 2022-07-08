@@ -37,8 +37,6 @@ export const medicinedata = () => (dispatch) => {
 };
 
 export const postmedicinedata = (data) => (dispatch) => {
-  dispatch({ type: Actiontype.POST_MEDICINE });
-
   try {
     dispatch(loadingMedicin());
     setTimeout(function () {
@@ -65,7 +63,7 @@ export const postmedicinedata = (data) => (dispatch) => {
           }
         )
         .then(response => response.json())
-        .then(medicines => dispatch({ type: Actiontype.POST_MEDICINE, payload: medicines }))
+        .then(medicines => dispatch({ type: Actiontype.POST_MEDICINE, payload: data }))
         .catch(error =>  dispatch(errorMedicin(error.message)));
     }, 2000)
       

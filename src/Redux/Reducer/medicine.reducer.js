@@ -21,7 +21,7 @@ export const medicineReducer = (state = initalstate, action) => {
                 medicine: action.payload,
                 error: ""
             }
-            case ActionType.POST_MEDICINE:
+        case ActionType.POST_MEDICINE:
             return {
                 ...state,
                 isLoading: false,

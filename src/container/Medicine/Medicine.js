@@ -24,8 +24,6 @@ function Medicine(props) {
   const dispatch = useDispatch();
 
   const medicines = useSelector((state) => state.medicine);
-  console.log(medicines.medicine);
-  console.log(medicines.error);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -64,8 +62,8 @@ function Medicine(props) {
       expiry: values.expiry,
     };
 
-    console.log(values)
-   dispatch(postmedicinedata(data))
+    console.log(data)
+    dispatch(postmedicinedata(data))
     setOpen(false);
     getData();
   };
@@ -92,7 +90,6 @@ function Medicine(props) {
         handleSubmit(values);
       }
       resetForm();
-      console.log(values)
     },
   });
 
@@ -219,9 +216,9 @@ function Medicine(props) {
                     <TextField
                       autoFocus
                       margin="dense"
-                      id="peice"
-                      name="peice"
-                      value={formik.values.peice}
+                      id="price"
+                      name="price"
+                      value={formik.values.price}
                       label="Price"
                       type="text"
                       fullWidth
@@ -229,7 +226,7 @@ function Medicine(props) {
                       onChange={formik.handleChange}
                     />
                     {formik.errors.name ? (
-                      <p className="errors">{formik.errors.peice}</p>
+                      <p className="errors">{formik.errors.price}</p>
                     ) : null}
                     <TextField
                       autoFocus

@@ -1,39 +1,39 @@
 {
   "medicine": [
     {
-      "id": 1,
-      "name": "med1",
-      "price": 45,
-      "quantity": 263,
-      "expiry": 2026
+      "id": 305,
+      "name": "tyutyutyutyutyu",
+      "price": "fs",
+      "quantity": "111",
+      "expiry": "20000"
     },
     {
-      "id": 2,
-      "name": "med2",
-      "price": 685,
-      "quantity": 64,
-      "expiry": 2022
+      "id": 931,
+      "name": "fsdf",
+      "price": "sdfsdf",
+      "quantity": "sdf",
+      "expiry": "dsfs"
     },
     {
-      "id": 3,
-      "name": "med3",
-      "price": 99,
-      "quantity": 426,
-      "expiry": 2029
+      "id": 68,
+      "name": "tyutyutyutyutyu",
+      "price": "fs",
+      "quantity": "000",
+      "expiry": "2025"
     },
     {
-      "id": 4,
-      "name": "med4",
-      "price": 342,
-      "quantity": 2946,
-      "expiry": 2034
+      "id": 480,
+      "name": "fdsf",
+      "price": "fs",
+      "quantity": "121",
+      "expiry": "121212"
     },
     {
-      "id": 5,
-      "name": "med5",
-      "price": 68,
-      "quantity": 800,
-      "expiry": 2025
+      "id": 867,
+      "name": "abc",
+      "price": "1",
+      "quantity": "2",
+      "expiry": "3"
     }
   ],
   "doctor": [
