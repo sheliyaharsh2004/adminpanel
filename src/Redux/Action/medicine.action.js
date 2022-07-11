@@ -39,7 +39,7 @@ export const medicinedata = () => (dispatch) => {
 export const postmedicinedata = (data) => (dispatch) => {
   try {
     dispatch(loadingMedicin());
-    setTimeout(function (data) {
+    setTimeout(function () {
      return fetch(BASE_URL + "medicine",{
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -72,6 +72,73 @@ export const postmedicinedata = (data) => (dispatch) => {
     dispatch(errorMedicin(error.message));
   }
 };
+
+export const deleteMedicin = (id) => (dispatch) => {
+  try {
+    dispatch(loadingMedicin())
+    setTimeout(function () {
+      return fetch(BASE_URL + 'medicine/' + id, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(response => {
+          if (response.ok) {
+            return response;
+          } else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+          }
+        },
+          error => {
+            var errmess = new Error(error.message); 
+            throw errmess;
+          }
+        )
+        .then(response => response.json())
+        .then(medicine => dispatch({ type: Actiontype.DELETE_MEDICINE, payload: id }))
+        .catch((error) => dispatch(errorMedicin(error.message)) )
+    }, 2000)
+  } catch (error) {
+    dispatch(errorMedicin(error.message));
+  }
+}
+
+export const updateMedicine = (data) => (dispatch) => {
+  try {
+    dispatch(loadingMedicin())
+    setTimeout(function () {
+      return fetch(BASE_URL + 'Medicines/' + data.id, {
+        method: 'PUT',
+        body : JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(response => {
+          if (response.ok) {
+            return response;
+          } else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+          }
+        },
+          error => {
+            var errmess = new Error(error.message); 
+            throw errmess;
+          }
+        )
+        .then(response => response.json())
+        .then(medicine => dispatch({ type: Actiontype.UPDATE_MEDICINE, payload: medicine }))
+        .catch((error) => dispatch(errorMedicin(error.message)) )
+    }, 2000)
+  } catch (error) {
+    dispatch(errorMedicin(error.message));
+  }
+}
 
 export const loadingMedicin = () => (dispatch) => {
   dispatch({ type: Actiontype.LOADING_MEDICINE })

@@ -1,27 +1,6 @@
 {
   "medicine": [
     {
-      "id": 305,
-      "name": "tyutyutyutyutyu",
-      "price": "fs",
-      "quantity": "111",
-      "expiry": "20000"
-    },
-    {
-      "id": 931,
-      "name": "fsdf",
-      "price": "sdfsdf",
-      "quantity": "sdf",
-      "expiry": "dsfs"
-    },
-    {
-      "id": 68,
-      "name": "tyutyutyutyutyu",
-      "price": "fs",
-      "quantity": "000",
-      "expiry": "2025"
-    },
-    {
       "id": 480,
       "name": "fdsf",
       "price": "fs",
@@ -34,6 +13,13 @@
       "price": "1",
       "quantity": "2",
       "expiry": "3"
+    },
+    {
+      "id": 23,
+      "name": "eret",
+      "price": "5",
+      "quantity": "111",
+      "expiry": "2025"
     }
   ],
   "doctor": [

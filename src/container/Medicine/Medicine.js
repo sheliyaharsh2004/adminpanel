@@ -12,12 +12,11 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useFormik, Formik, Form } from "formik";
 import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { medicinedata, postmedicinedata } from "../../Redux/Action/medicine.action";
+import { deleteMedicin, medicinedata, postmedicinedata, updateMedicine } from "../../Redux/Action/medicine.action";
 
 function Medicine(props) {
   const [open, setOpen] = React.useState(false);
   const [dopen, setDopen] = React.useState(false);
-  const [showData, setEShowData] = useState([]);
   const [datamed, setDatamed] = useState([]);
   const [rid, setRid] = useState("");
   const [udate, setUdate] = useState(false);
@@ -45,6 +44,7 @@ function Medicine(props) {
     setOpen(true);
 
     formik.setValues({
+      id: params.id,
       name: params.row.name,
       price: params.row.price,
       quantity: params.row.quantity,
@@ -94,21 +94,20 @@ function Medicine(props) {
   });
 
   const Updata = (values) => {
-    console.log(values);
+    // let edituData = JSON.parse(localStorage.getItem("medicine"));
 
-    let edituData = JSON.parse(localStorage.getItem("medicine"));
-    console.log(edituData);
+    // let upadateData = edituData.map((u) => {
+    //   if (u.id === rid) {
+    //     console.log(rid);
+    //     return { id: rid, ...values };
+    //   } else {
+    //     return u;
+    //   }
+    // });
 
-    let upadateData = edituData.map((u) => {
-      if (u.id === rid) {
-        console.log(rid);
-        return { id: rid, ...values };
-      } else {
-        return u;
-      }
-    });
+    // localStorage.setItem("medicine", JSON.stringify(upadateData));
 
-    localStorage.setItem("medicine", JSON.stringify(upadateData));
+    dispatch(updateMedicine(values))
 
     getData();
     setOpen(false);
@@ -121,9 +120,11 @@ function Medicine(props) {
   };
 
   const handleDelete = () => {
-    let removedata = JSON.parse(localStorage.getItem("medicine"));
-    let filterdata = removedata.filter((r, i) => r.id !== rid);
-    localStorage.setItem("medicine", JSON.stringify(filterdata));
+    // let removedata = JSON.parse(localStorage.getItem("medicine"));
+    // let filterdata = removedata.filter((r, i) => r.id !== rid);
+    // localStorage.setItem("medicine", JSON.stringify(filterdata));
+
+    dispatch(deleteMedicin(rid))
 
     getData();
     setDopen(false);
@@ -159,8 +160,7 @@ function Medicine(props) {
           <>
             <IconButton
               className="border-primary"
-              onClick={() => handleClickDopen(params.id)}
-            >
+              onClick={() => handleClickDopen(params.id)}>
               <DeleteIcon />
             </IconButton>
             <IconButton onClick={() => handleClickEditOpen(params)}>
