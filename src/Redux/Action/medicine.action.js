@@ -110,7 +110,7 @@ export const updateMedicine = (data) => (dispatch) => {
   try {
     dispatch(loadingMedicin())
     setTimeout(function () {
-      return fetch(BASE_URL + 'Medicines/' + data.id, {
+      return fetch(BASE_URL + 'medicine/' + data.id, {
         method: 'PUT',
         body : JSON.stringify(data),
         headers: {

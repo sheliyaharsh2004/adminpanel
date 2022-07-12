@@ -5,20 +5,20 @@
       "name": "fdsf",
       "price": "fs",
       "quantity": "121",
-      "expiry": "121212"
+      "expiry": "2038"
     },
     {
       "id": 867,
       "name": "abc",
       "price": "1",
-      "quantity": "2",
-      "expiry": "3"
+      "quantity": "253",
+      "expiry": "2033"
     },
     {
       "id": 23,
       "name": "eret",
-      "price": "5",
-      "quantity": "111",
+      "price": "55",
+      "quantity": "459",
       "expiry": "2025"
     }
   ],
