@@ -15,10 +15,18 @@ function Counter(props) {
     }
 
     return (
-        <div>
-            <button onClick={()=> handleincrement()}>+</button>
-            <p>{con.counter}</p>
-            <button onClick={()=> handledecremet()}>-</button>
+        <div className="align-items-center">
+            <button 
+                className="border-0"
+                onClick={()=> handleincrement()}>
+                <b>+</b>    
+            </button>
+            <b><p className='mb-2 mt-2'>{con.counter}</p></b>
+            <button 
+                className="border-0"
+                onClick={()=> handledecremet()}>
+                <b>-</b>
+            </button>
         </div>
     );
 }
