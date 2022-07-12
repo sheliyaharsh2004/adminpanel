@@ -21,7 +21,7 @@ function Counter(props) {
                 onClick={()=> handleincrement()}>
                 <b>+</b>    
             </button>
-            <b><p className='mb-2 mt-2'>{con.counter}</p></b>
+            <b><p className='mb-2 mt-2 '>{con.counter}</p></b>
             <button 
                 className="border-0"
                 onClick={()=> handledecremet()}>
