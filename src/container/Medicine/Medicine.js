@@ -13,6 +13,7 @@ import { useFormik, Formik, Form } from "formik";
 import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteMedicin, medicinedata, postmedicinedata, updateMedicine } from "../../Redux/Action/medicine.action";
+import { CircleLoader } from "react-spinners";
 
 function Medicine(props) {
   const [open, setOpen] = React.useState(false);
@@ -175,7 +176,12 @@ function Medicine(props) {
   return (
     <>
       {medicines.isLoading ? 
-        <p>Loading...</p>
+        <CircleLoader 
+          className="center"
+          color="rgba(46, 118, 209, 1)"
+          size={80}
+          speedMultiplier={1}
+        />
         : 
         (medicines.error ? 
           <p>{medicines.error}</p>
