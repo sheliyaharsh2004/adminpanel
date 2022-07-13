@@ -92,7 +92,6 @@ function Doctor(props) {
           localStorage.setItem("doctor", JSON.stringify(doctorData));
         }
         getData();
-        setDatamed();
         handleClose();
         resetForm();
       }
