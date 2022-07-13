@@ -71,7 +71,7 @@ function Doctor(props) {
     validationSchema: schema,
     onSubmit: (values, { resetForm }) => {
       const { name, email, sallery, post, experience } = values;
-
+      console.log(values);
       if (udate) {
         Updata(values);
       } else {
@@ -83,6 +83,7 @@ function Doctor(props) {
           post,
           experience,
         };
+        console.log(docdata);
         let doctorData = JSON.parse(localStorage.getItem("doctor"));
 
         if (doctorData == null) {
@@ -92,7 +93,6 @@ function Doctor(props) {
           localStorage.setItem("doctor", JSON.stringify(doctorData));
         }
         getData();
-        setDatamed();
         handleClose();
         resetForm();
       }
@@ -124,7 +124,6 @@ function Doctor(props) {
 
   const getData = () => {
     let getEDataItem = JSON.parse(localStorage.getItem("doctor"));
-
     if (getEDataItem !== null) {
       setDatamed(getEDataItem);
     }
@@ -142,16 +141,7 @@ function Doctor(props) {
     getData();
   }, []);
 
-  const EditData = (id) => {
-    console.log(id);
-
-    let GetEditData = JSON.parse(localStorage.getItem("doctor"));
-
-    let EData = GetEditData.filter((e, i) => e.id !== id);
-
-    console.log(JSON.stringify(EData));
-  };
-
+  
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     { field: "name", headerName: "Name", width: 120 },
