@@ -221,125 +221,125 @@ function Doctor(props) {
         fullWidth
         variant="standard"
         onChange={(e) => handlesearch(e.target.value)}
-        
       />
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Doctor Data Add
-      </Button>
-      <div className="mt-3" style={{ height: 400, width: "100%" }}>
-        <DataGrid
-          rows={filter}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          checkboxSelection
-        />
-      </div>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Doctor Data</DialogTitle>
-        <Formik value={formik}>
-          <Form key={formik} onSubmit={formik.handleSubmit}>
-            <DialogContent>
-              <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                name="name"
-                value={formik.values.name}
-                label="Name"
-                type="text"
-                fullWidth
-                variant="standard"
-                onChange={formik.handleChange}
-              />
-              {formik.errors.name ? (
-                <p className="errors">{formik.errors.name}</p>
-              ) : null}
-              <TextField
-                autoFocus
-                margin="dense"
-                id="email"
-                name="email"
-                value={formik.values.email}
-                label="Email"
-                type="email"
-                fullWidth
-                variant="standard"
-                onChange={formik.handleChange}
-              />
-              {formik.errors.email ? (
-                <p className="errors">{formik.errors.email}</p>
-              ) : null}
-              <TextField
-                autoFocus
-                margin="dense"
-                id="sallery"
-                name="sallery"
-                value={formik.values.sallery}
-                label="Sallery"
-                type="text"
-                fullWidth
-                variant="standard"
-                onChange={formik.handleChange}
-              />
-              {formik.errors.sallery ? (
-                <p className="errors">{formik.errors.sallery}</p>
-              ) : null}
-              <TextField
-                autoFocus
-                margin="dense"
-                id="post"
-                name="post"
-                label="Post"
-                value={formik.values.post}
-                type="text"
-                fullWidth
-                variant="standard"
-                onChange={formik.handleChange}
-              />
-              {formik.errors.post ? (
-                <p className="error">{formik.errors.post}</p>
-              ) : null}
-              <TextField
-                autoFocus
-                margin="dense"
-                id="experience"
-                name="experience"
-                value={formik.values.experience}
-                label="Experience"
-                type="text"
-                fullWidth
-                variant="standard"
-                onChange={formik.handleChange}
-              />
-              {formik.errors.experience ? (
-                <p className="errors">{formik.errors.experience}</p>
-              ) : null}
-              <DialogActions>
-                <Button onClick={handleClose}>Cancel</Button>
-                <Button type="submit">Submit</Button>
-              </DialogActions>
-            </DialogContent>
-          </Form>
-        </Formik>
-      </Dialog>
 
-      <Dialog
-        open={Dopen}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Are You Sure Delete Data?"}
-        </DialogTitle>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={() => handleDelete()} autoFocus>
-            yes
-          </Button>
-        </DialogActions>
-      </Dialog>
+        <Button variant="outlined" onClick={handleClickOpen}>
+          Doctor Data Add
+        </Button>
+        <div className="mt-3" style={{ height: 400, width: "100%" }}>
+          <DataGrid
+            rows={filter}
+            columns={columns}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            checkboxSelection
+          />
+        </div>
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>Doctor Data</DialogTitle>
+          <Formik value={formik}>
+            <Form key={formik} onSubmit={formik.handleSubmit}>
+              <DialogContent>
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="name"
+                  name="name"
+                  value={formik.values.name}
+                  label="Name"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                  onChange={formik.handleChange}
+                />
+                {formik.errors.name ? (
+                  <p className="errors">{formik.errors.name}</p>
+                ) : null}
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="email"
+                  name="email"
+                  value={formik.values.email}
+                  label="Email"
+                  type="email"
+                  fullWidth
+                  variant="standard"
+                  onChange={formik.handleChange}
+                />
+                {formik.errors.email ? (
+                  <p className="errors">{formik.errors.email}</p>
+                ) : null}
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="sallery"
+                  name="sallery"
+                  value={formik.values.sallery}
+                  label="Sallery"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                  onChange={formik.handleChange}
+                />
+                {formik.errors.sallery ? (
+                  <p className="errors">{formik.errors.sallery}</p>
+                ) : null}
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="post"
+                  name="post"
+                  label="Post"
+                  value={formik.values.post}
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                  onChange={formik.handleChange}
+                />
+                {formik.errors.post ? (
+                  <p className="error">{formik.errors.post}</p>
+                ) : null}
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="experience"
+                  name="experience"
+                  value={formik.values.experience}
+                  label="Experience"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                  onChange={formik.handleChange}
+                />
+                {formik.errors.experience ? (
+                  <p className="errors">{formik.errors.experience}</p>
+                ) : null}
+                <DialogActions>
+                  <Button onClick={handleClose}>Cancel</Button>
+                  <Button type="submit">Submit</Button>
+                </DialogActions>
+              </DialogContent>
+            </Form>
+          </Formik>
+        </Dialog>
+                
+        <Dialog
+          open={Dopen}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Are You Sure Delete Data?"}
+          </DialogTitle>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={() => handleDelete()} autoFocus>
+              yes
+            </Button>
+          </DialogActions>
+        </Dialog>
     </div>
   );
 }
