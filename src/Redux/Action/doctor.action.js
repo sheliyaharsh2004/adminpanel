@@ -1,34 +1,37 @@
+import { getdoctordata } from "../../commene/apis/doctor.api";
 import { BASE_URL } from "../../shared/baseurl";
 import * as Actiontype from "../ActionType";
 
 export const doctordata = () => (dispatch) => {
-  dispatch({ type: Actiontype.GET_MEDICINE });
 
   try {
-    dispatch(loadingdoctor());
-    setTimeout(function () {
-      fetch(BASE_URL + "doctor")
-        .then(
-          (response) => {
-            if (response.ok) {
-              return response;
-            } else {
-              var error = new Error(
-                "Error " + response.status + ": " + response.statusText
-              );
-              error.response = response;
-              throw error;
-            }
-          },
-          (error) => {
-            var errmess = new Error(error.message);
-            throw errmess;
-          }
-        )
-        .then(response => response.json())
-        .then(doctors => dispatch({ type: Actiontype.GET_DOCTOR, payload: doctors }))
-        .catch(error =>  dispatch(errordoctor(error.message)));
-    }, 2000)
+    getdoctordata()
+    .then((data) => dispatch({ type: Actiontype.GET_DOCTOR, payload: data.data}))
+
+    // dispatch(loadingdoctor());
+    // setTimeout(function () {
+    //   fetch(BASE_URL + "doctor")
+    //     .then(
+    //       (response) => {
+    //         if (response.ok) {
+    //           return response;
+    //         } else {
+    //           var error = new Error(
+    //             "Error " + response.status + ": " + response.statusText
+    //           );
+    //           error.response = response;
+    //           throw error;
+    //         }
+    //       },
+    //       (error) => {
+    //         var errmess = new Error(error.message);
+    //         throw errmess;
+    //       }
+    //     )
+    //     .then(response => response.json())
+    //     .then(doctors => dispatch({ type: Actiontype.GET_DOCTOR, payload: doctors }))
+    //     .catch(error =>  dispatch(errordoctor(error.message)));
+    // }, 2000)
       
     
   } catch (error) {

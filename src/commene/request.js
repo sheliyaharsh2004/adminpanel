@@ -1,6 +1,18 @@
-import { BASE_URL } from "../shared/baseurl";
+import axios from 'axios';
+import { BASE_URL } from '../shared/baseurl';
 
-const instance = axios.create({
-    url: BASE_URL,
+const axiosinstance = axios.create({
+    baseURL: BASE_URL,
     timeout: 2000,
-  });
+});
+
+export const sendRequest = (config) =>{
+  return axiosinstance.request(config)
+}  
+
+export const getRequest = (path) =>{
+  return sendRequest({
+    url : path,
+    method : 'GET'
+  })
+}
