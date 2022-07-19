@@ -13,7 +13,7 @@ import { useFormik, Formik, Form } from "formik";
 import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { CircleLoader } from "react-spinners";
-import { deletedoctor, doctordata, postmedoctordata, updatedoctor } from "../../Redux/Action/doctor.action";
+import { deletedoctor, doctordata, postdoctordata, postmedoctordata, updatedoctor } from "../../Redux/Action/doctor.action";
 
 function Doctor(props) {
   const [open, setOpen] = useState(false);
@@ -67,7 +67,7 @@ function Doctor(props) {
     };
 
     console.log(data)
-    dispatch(postmedoctordata(data))
+    dispatch(postdoctordata(data))
     setOpen(false);
     getData();
   };

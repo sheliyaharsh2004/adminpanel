@@ -45,6 +45,14 @@
       "sallery": "100000",
       "post": "The New Yorker",
       "experience": "26"
+    },
+    {
+      "id": 885,
+      "name": "Dr.demo",
+      "email": "rnwwebchirag@gmail.com",
+      "sallery": "20000",
+      "post": "hii",
+      "experience": "2"
     }
   ],
   "profile": {
