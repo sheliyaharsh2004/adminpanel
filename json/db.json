@@ -34,7 +34,7 @@
       "id": 1,
       "name": "Dr. Rajeev Aggarwal",
       "email": "rajeevaggarwa@gmail.com",
-      "sallery": 90000,
+      "sallery": "90000",
       "post": "The New Yorker",
       "experience": "10"
     },
@@ -51,7 +51,7 @@
       "name": "Dr.demo",
       "email": "rnwwebchirag@gmail.com",
       "sallery": "20000",
-      "post": "hii",
+      "post": "The New Yorker",
       "experience": "2"
     }
   ],

@@ -11,31 +11,7 @@ export const doctordata = () => (dispatch) => {
       .then((data) => dispatch({ type: Actiontype.GET_DOCTOR, payload: data.data}))
       .catch(error =>  dispatch(errordoctor(error.message)));
     },2000 )
-  
-    // setTimeout(function () {
-    //   fetch(BASE_URL + "doctor")
-    //     .then(
-    //       (response) => {
-    //         if (response.ok) {
-    //           return response;
-    //         } else {
-    //           var error = new Error(
-    //             "Error " + response.status + ": " + response.statusText
-    //           );
-    //           error.response = response;
-    //           throw error;
-    //         }
-    //       },
-    //       (error) => {
-    //         var errmess = new Error(error.message);
-    //         throw errmess;
-    //       }
-    //     )
-    //     .then(response => response.json())
-    //     .then(doctors => dispatch({ type: Actiontype.GET_DOCTOR, payload: doctors }))
-    //     .catch(error =>  dispatch(errordoctor(error.message)));
-    // }, 2000)  
-    
+   
   } catch (error) {
     dispatch(errordoctor(error.message));
   }
@@ -50,34 +26,6 @@ export const postdoctordata = (data) => (dispatch) => {
       .catch(error =>  dispatch(errordoctor(error.message)));
     },2000 )
 
-    // setTimeout(function () {
-    //  return fetch(BASE_URL + "doctor",{
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify(data)
-    //   })
-    //     .then(
-    //       (response) => {
-    //         if (response.ok) {
-    //           return response;
-    //         } else {
-    //           var error = new Error(
-    //             "Error " + response.status + ": " + response.statusText
-    //           );
-    //           error.response = response;
-    //           throw error;
-    //         }
-    //       },
-    //       (error) => {
-    //         var errmess = new Error(error.message);
-    //         throw errmess;
-    //       }
-    //     )
-    //     .then(response => response.json())
-    //     .then(doctors => dispatch({ type: Actiontype.POST_DOCTOR, payload: data }))
-    //     .catch(error =>  dispatch(errordoctor(error.message)));
-    // }, 2000)
-      
   } catch (error) {
     dispatch(errordoctor(error.message));
   }
@@ -92,31 +40,6 @@ export const deletedoctor = (id) => (dispatch) => {
       .catch(error =>  dispatch(errordoctor(error.message)));
     },2000 )
 
-    // setTimeout(function () {
-    //   return fetch(BASE_URL + 'doctor/' + id, {
-    //     method: 'DELETE',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //   })
-    //     .then(response => {
-    //       if (response.ok) {
-    //         return response;
-    //       } else {
-    //         var error = new Error('Error ' + response.status + ': ' + response.statusText);
-    //         error.response = response;
-    //         throw error;
-    //       }
-    //     },
-    //       error => {
-    //         var errmess = new Error(error.message); 
-    //         throw errmess;
-    //       }
-    //     )
-    //     .then(response => response.json())
-    //     .then(doctors => dispatch({ type: Actiontype.DELETE_DOCTOR, payload: id }))
-    //     .catch((error) => dispatch(errordoctor(error.message)) )
-    // }, 2000)
   } catch (error) {
     dispatch(errordoctor(error.message));
   }
@@ -127,36 +50,10 @@ export const updatedoctor = (data) => (dispatch) => {
     dispatch(loadingdoctor())
     setTimeout(function () {
       return updatedoctordata(data)
-      .then((data) => dispatch({ type: Actiontype.DELETE_DOCTOR, payload: data.data}))
+      .then((data) => dispatch({ type: Actiontype.UPDATE_DOCTOR, payload: data.data}))
       .catch(error =>  dispatch(errordoctor(error.message)));
     },2000 )
 
-    // setTimeout(function () {
-    //   return fetch(BASE_URL + 'doctor/' + data.id, {
-    //     method: 'PUT',
-    //     body : JSON.stringify(data),
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //   })
-    //     .then(response => {
-    //       if (response.ok) {
-    //         return response;
-    //       } else {
-    //         var error = new Error('Error ' + response.status + ': ' + response.statusText);
-    //         error.response = response;
-    //         throw error;
-    //       }
-    //     },
-    //       error => {
-    //         var errmess = new Error(error.message); 
-    //         throw errmess;
-    //       }
-    //     )
-    //     .then(response => response.json())
-    //     .then(doctors => dispatch({ type: Actiontype.UPDATE_DOCTOR, payload: doctors }))
-    //     .catch((error) => dispatch(errordoctor(error.message)) )
-    // }, 2000)
   } catch (error) {
     dispatch(errordoctor(error.message));
   }
