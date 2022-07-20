@@ -106,6 +106,7 @@ export default function Layout({ children }) {
     { label: "Medicine", to: "/medicine", icon: <MedicalServicesIcon /> },
     { label: "Doctor", to: "/doctor", icon: <PersonIcon /> },
     { label: "Counter", to: "/counter", icon: <HourglassFullIcon /> },
+    { label: "Promise_Example", to: "/promise_example", icon: <HourglassFullIcon /> },
   ];
 
   return (
