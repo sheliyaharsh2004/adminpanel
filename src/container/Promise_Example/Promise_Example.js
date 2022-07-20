@@ -7,17 +7,17 @@ function Promise_Example(props) {
         return "one";
     }
 
-    // const Two = () => {      //
+    // const Two = () => {      // synchronous
     //     return "two";
     // }
 
-    // const Two = () => {      //
+    // const Two = () => {      // asynchronous
     //     setTimeout(() => {
     //         return "two";
     //     },2000)
     // }
 
-    const Two = () => {          //async,await
+    const Two = () => {          // async,await
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve("two");
