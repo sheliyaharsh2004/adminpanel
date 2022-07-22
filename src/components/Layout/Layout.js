@@ -108,6 +108,7 @@ export default function Layout({ children }) {
     { label: "Counter", to: "/counter", icon: <HourglassFullIcon /> },
     { label: "Promise_Example", to: "/promise_example", icon: <HourglassFullIcon /> },
     { label: "UseMemo", to: "/usememo", icon: <HourglassFullIcon /> },
+    { label: "UseCallBack", to: "/usecallback", icon: <HourglassFullIcon /> },
   ];
 
   return (
