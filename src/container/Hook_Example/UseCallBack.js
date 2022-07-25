@@ -14,10 +14,10 @@ function UseCallBack(props) {
 
     console.log(number);
 
-    const getItem = useCallback(
+    const getItem = useCallback( 
         (i) => {
             return [ i+number, i+number+1, i+number+2 ]
-        }
+        }, [number]
     )
 
     return (
