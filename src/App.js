@@ -11,6 +11,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import Promise_Example from "./container/Promise_Example/Promise_Example";
 import UseMemo from "./container/Hook_Example/UseMemo";
 import UseCallBack from "./container/Hook_Example/UseCallBack";
+import TasContextProvider from "./container/Theme/TasContextProvider";
 
 function App() {
 
@@ -18,20 +19,22 @@ function App() {
 
   return (
     <>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <Layout>
-          <Switch>
-            <Route exact path={"/medicine"} component={Medicine} />
-            <Route exact path={"/doctor"} component={Doctor} />
-            <Route exact path={"/counter"} component={Counter} />
-            <Route exact path={"/promise_example"} component={Promise_Example} />
-            <Route exact path={"/usememo"} component={UseMemo} />
-            <Route exact path={"/usecallback"} component={UseCallBack} />
-          </Switch>
-        </Layout>
-      </PersistGate>
-    </Provider>
+    <TasContextProvider>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <Layout>
+            <Switch>
+              <Route exact path={"/medicine"} component={Medicine} />
+              <Route exact path={"/doctor"} component={Doctor} />
+              <Route exact path={"/counter"} component={Counter} />
+              <Route exact path={"/promise_example"} component={Promise_Example} />
+              <Route exact path={"/usememo"} component={UseMemo} />
+              <Route exact path={"/usecallback"} component={UseCallBack} />
+            </Switch>
+          </Layout>
+        </PersistGate>
+      </Provider>
+    </TasContextProvider>
     </>
   );
 }
