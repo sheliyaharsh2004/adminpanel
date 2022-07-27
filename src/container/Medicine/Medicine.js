@@ -14,6 +14,8 @@ import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteMedicin, medicinedata, postmedicinedata, updateMedicine } from "../../Redux/Action/medicine.action";
 import { CircleLoader } from "react-spinners";
+import { useContext } from "react";
+import ThemeContext from "../Theme/ThemeContext";
 
 function Medicine(props) {
   const [open, setOpen] = React.useState(false);
@@ -136,16 +138,6 @@ function Medicine(props) {
     getData();
   }, []);
 
-  const EditData = (id) => {
-    console.log(id);
-
-    let GetEditData = JSON.parse(localStorage.getItem("medicine"));
-
-    let EData = GetEditData.filter((e, i) => e.id === id);
-
-    console.log(JSON.stringify(EData));
-  };
-
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     { field: "name", headerName: "Name", width: 130 },
@@ -173,6 +165,9 @@ function Medicine(props) {
     },
   ];
 
+  const theme = useContext(ThemeContext)
+  console.log(theme.theme);
+
   return (
     <>
       {medicines.isLoading ? 
@@ -187,92 +182,95 @@ function Medicine(props) {
           <p>{medicines.error}</p>
           : 
           <div>
-            <Button variant="outlined" onClick={handleClickOpen}>
-              Add Medicine
-            </Button>
-            <div className="mt-3" style={{ height: 400, width: "100%" }}>
-              <DataGrid
-                rows={medicines.medicine}
-                columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-                checkboxSelection
-              />
-            </div>
-            <Dialog open={open} onClose={handleClose}>
-              <DialogTitle>Add Medicine</DialogTitle>
-              <Formik value={formik}>
-                <Form onSubmit={formik.handleSubmit}>
-                  <DialogContent>
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      id="name"
-                      name="name"
-                      value={formik.values.name}
-                      label="Name"
-                      type="text"
-                      fullWidth
-                      variant="standard"
-                      onChange={formik.handleChange}
-                    />
-                    {formik.errors.name ? (
-                      <p className="errors">{formik.errors.name}</p>
-                    ) : null}
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      id="price"
-                      name="price"
-                      value={formik.values.price}
-                      label="Price"
-                      type="text"
-                      fullWidth
-                      variant="standard"
-                      onChange={formik.handleChange}
-                    />
-                    {formik.errors.name ? (
-                      <p className="errors">{formik.errors.price}</p>
-                    ) : null}
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      id="quantity"
-                      name="quantity"
-                      value={formik.values.quantity}
-                      label="Quantity"
-                      type="text"
-                      fullWidth
-                      variant="standard"
-                      onChange={formik.handleChange}
-                    />
-                    {formik.errors.name ? (
-                      <p className="errors">{formik.errors.quantity}</p>
-                    ) : null}
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      id="expiey"
-                      name="expiry"
-                      value={formik.values.expiry}
-                      label="Expiry"
-                      type="text"
-                      fullWidth
-                      variant="standard"
-                      onChange={formik.handleChange}
-                    />
-                    {formik.errors.name ? (
-                      <p className="errors">{formik.errors.expiry}</p>
-                    ) : null}
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button type="submit">Submit</Button>
-                  </DialogActions>
-                </Form>
-              </Formik>
-            </Dialog>
+            <Button onClick={() => theme.toogle_theme(theme.theme)}> Change Theme </Button> <br/>
 
+            <div className={`${theme.theme}`}>
+              <Button variant="outlined" onClick={handleClickOpen}>
+                Add Medicine
+              </Button>
+              <div className="mt-3" style={{ height: 400, width: "100%" }}>
+                <DataGrid
+                  rows={medicines.medicine}
+                  columns={columns}
+                  pageSize={5}
+                  rowsPerPageOptions={[5]}
+                  checkboxSelection
+                />
+              </div>
+              <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Add Medicine</DialogTitle>
+                <Formik value={formik}>
+                  <Form onSubmit={formik.handleSubmit}>
+                    <DialogContent>
+                      <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        name="name"
+                        value={formik.values.name}
+                        label="Name"
+                        type="text"
+                        fullWidth
+                        variant="standard"
+                        onChange={formik.handleChange}
+                      />
+                      {formik.errors.name ? (
+                        <p className="errors">{formik.errors.name}</p>
+                      ) : null}
+                      <TextField
+                        autoFocus
+                        margin="dense"
+                        id="price"
+                        name="price"
+                        value={formik.values.price}
+                        label="Price"
+                        type="text"
+                        fullWidth
+                        variant="standard"
+                        onChange={formik.handleChange}
+                      />
+                      {formik.errors.name ? (
+                        <p className="errors">{formik.errors.price}</p>
+                      ) : null}
+                      <TextField
+                        autoFocus
+                        margin="dense"
+                        id="quantity"
+                        name="quantity"
+                        value={formik.values.quantity}
+                        label="Quantity"
+                        type="text"
+                        fullWidth
+                        variant="standard"
+                        onChange={formik.handleChange}
+                      />
+                      {formik.errors.name ? (
+                        <p className="errors">{formik.errors.quantity}</p>
+                      ) : null}
+                      <TextField
+                        autoFocus
+                        margin="dense"
+                        id="expiey"
+                        name="expiry"
+                        value={formik.values.expiry}
+                        label="Expiry"
+                        type="text"
+                        fullWidth
+                        variant="standard"
+                        onChange={formik.handleChange}
+                      />
+                      {formik.errors.name ? (
+                        <p className="errors">{formik.errors.expiry}</p>
+                      ) : null}
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={handleClose}>Cancel</Button>
+                      <Button type="submit">Submit</Button>
+                    </DialogActions>
+                  </Form>
+                </Formik>
+              </Dialog>
+            </div>
             <Dialog
               open={dopen}
               onClose={handleClose}

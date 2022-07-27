@@ -6,7 +6,7 @@ export const ThemeReducer = (state, action) => {
         case ActionType.TOOGLE_THEME :
             return {
                 ...state,
-                UData : action.payload
+                theme : action.payload
             }
             default :
             return state;

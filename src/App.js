@@ -1,3 +1,4 @@
+import "./App.css";
 import { Route } from "react-router-dom";
 import { Switch } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
@@ -11,7 +12,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import Promise_Example from "./container/Promise_Example/Promise_Example";
 import UseMemo from "./container/Hook_Example/UseMemo";
 import UseCallBack from "./container/Hook_Example/UseCallBack";
-import TasContextProvider from "./container/Theme/TasContextProvider";
+import { ThemeProvider } from "./container/Theme/ThemeContext";
 
 function App() {
 
@@ -19,7 +20,7 @@ function App() {
 
   return (
     <>
-    <TasContextProvider>
+    <ThemeProvider>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <Layout>
@@ -34,7 +35,7 @@ function App() {
           </Layout>
         </PersistGate>
       </Provider>
-    </TasContextProvider>
+    </ThemeProvider>
     </>
   );
 }
