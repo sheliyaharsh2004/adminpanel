@@ -58,7 +58,6 @@ function Doctor(props) {
 
   const handleSubmit = (values) => {
     let data = {
-      id: Math.floor(Math.random() * 1000),
       name: values.name,
       email: values.email,
       sallery: values.sallery,
@@ -152,7 +151,6 @@ function Doctor(props) {
   }, []);
 
   const columns = [
-    { field: "id", headerName: "ID", width: 70 },
     { field: "name", headerName: "Name", width: 150 },
     { field: "email", headerName: "Email", width: 200 },
     { field: "sallery", headerName: "Sallery", width: 90 },
@@ -195,7 +193,6 @@ function Doctor(props) {
     let medsearch = JSON.parse(localStorage.getItem("doctor"))
       let fdata = medsearch.filter((f) => (
 
-        f.id.toString().includes(Dr) ||
         f.name.toString().includes(Dr) ||
         f.email.toString().includes(Dr) ||
         f.sallery.toString().includes(Dr) ||
