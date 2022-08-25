@@ -166,7 +166,7 @@ function Medicine(props) {
   ];
 
   const theme = useContext(ThemeContext)
-  console.log(theme.theme);
+  // console.log(theme.theme);
 
   return (
     <>

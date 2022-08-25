@@ -52,6 +52,7 @@ function Doctor(props) {
       sallery: params.row.sallery,
       post: params.row.post,
       experience: params.row.experience,
+      // Update: params.row.Update,
     });
     setUdate(true);
   };
@@ -63,6 +64,7 @@ function Doctor(props) {
       sallery: values.sallery,
       post: values.post,
       experience: values.experience,
+      // Update: values.Update,
     };
 
     console.log(data)
@@ -77,6 +79,7 @@ function Doctor(props) {
     sallery: yup.string().required("Please enter sallery"),
     post: yup.string().required("Please enter Post"),
     experience: yup.string().required("Please enter experience"),
+    Update:yup.string().required(),
   });
 
   const formik = useFormik({
@@ -86,6 +89,7 @@ function Doctor(props) {
       sallery: "",
       post: "",
       experience: "",
+      Update: "",
     },
     validationSchema: schema,
     onSubmit: (values, { resetForm }) => {
@@ -323,6 +327,19 @@ function Doctor(props) {
                     {formik.errors.experience ? (
                       <p className="errors">{formik.errors.experience}</p>
                     ) : null}
+                    <TextField
+                      autoFocus
+                      margin="dense"
+                      id="Update"
+                      name="Update"
+                      value={formik.values.Update}
+                      type="file"
+                      variant="standard"
+                      onChange={formik.handleChange}
+                    />
+                    {formik.errors.Update ? (
+                      <p className="errors">{formik.errors.Update}</p>
+                    ) : null}
                     <DialogActions>
                       <Button onClick={handleClose}>Cancel</Button>
                       <Button type="submit">Submit</Button>
@@ -330,8 +347,7 @@ function Doctor(props) {
                   </DialogContent>
                 </Form>
               </Formik>
-            </Dialog>
-                    
+            </Dialog>      
             <Dialog
               open={Dopen}
               onClose={handleClose}

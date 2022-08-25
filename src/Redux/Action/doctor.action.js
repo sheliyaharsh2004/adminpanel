@@ -1,6 +1,7 @@
 import { deletedoctordata, getdoctordata, postDoctor, updatedoctordata } from "../../commene/apis/doctor.api";
-import { db } from "../../Firebase";
+import storade, { db } from "../../Firebase";
 import { collection, addDoc, getDocs, doc, deleteDoc, updateDoc } from "firebase/firestore"; 
+import { ref, uploadBytes } from "firebase/storage";
 import { BASE_URL } from "../../shared/baseurl";
 import * as Actiontype from "../ActionType";
 
@@ -26,10 +27,15 @@ export const doctordata = () => async (dispatch) => {
 export const postdoctordata = (data) => async (dispatch) => {
   try {
     dispatch(loadingdoctor());
+    
+    const storageRef = ref(storade, 'doctor/'+data.Update.name);
+
+    uploadBytes(storageRef, data.Update).then((snapshot) => {
+      console.log('Uploaded a blob or file!');
+    });
 
     const docRef = await addDoc(collection(db, "doctor"),  data );
     console.log("Document written with ID: ", docRef.id);
-
     dispatch({type: Actiontype.POST_DOCTOR, payload: {id:docRef.id, ...data}})
 
   } catch (error) {
