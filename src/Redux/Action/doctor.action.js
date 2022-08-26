@@ -1,7 +1,7 @@
 import { deletedoctordata, getdoctordata, postDoctor, updatedoctordata } from "../../commene/apis/doctor.api";
 import storade, { db } from "../../Firebase";
 import { collection, addDoc, getDocs, doc, deleteDoc, updateDoc } from "firebase/firestore"; 
-import { ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { BASE_URL } from "../../shared/baseurl";
 import * as Actiontype from "../ActionType";
 
@@ -28,15 +28,34 @@ export const postdoctordata = (data) => async (dispatch) => {
   try {
     dispatch(loadingdoctor());
     
-    const storageRef = ref(storade, 'doctor/'+data.Update.name);
+    const storageRef = ref(storade, 'doctor/'+data.upload.name);
 
-    uploadBytes(storageRef, data.Update).then((snapshot) => {
+    uploadBytes(storageRef, data.upload).then((snapshot) => {
+      getDownloadURL(snapshot.ref)
+        .then(async(url) => {
+          const docRef = await addDoc(collection(db, "doctor"),{
+            name: data.name,
+            email: data.email,
+            sallery: data.sallery,
+            post: data.post,
+            experience: data.experience,
+            url:url
+          });
+
+          dispatch({
+            type: Actiontype.POST_DOCTOR, 
+            payload: {
+              id:docRef.id, 
+              name: data.name,
+              email: data.email,
+              sallery: data.sallery,
+              post: data.post,
+              experience: data.experience,
+              url:url
+            }})
+        })
       console.log('Uploaded a blob or file!');
     });
-
-    const docRef = await addDoc(collection(db, "doctor"),  data );
-    console.log("Document written with ID: ", docRef.id);
-    dispatch({type: Actiontype.POST_DOCTOR, payload: {id:docRef.id, ...data}})
 
   } catch (error) {
     dispatch(errordoctor(error.message));

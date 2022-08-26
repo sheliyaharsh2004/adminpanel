@@ -52,23 +52,22 @@ function Doctor(props) {
       sallery: params.row.sallery,
       post: params.row.post,
       experience: params.row.experience,
-      // Update: params.row.Update,
     });
     setUdate(true);
   };
 
   const handleSubmit = (values) => {
-    let data = {
-      name: values.name,
-      email: values.email,
-      sallery: values.sallery,
-      post: values.post,
-      experience: values.experience,
-      // Update: values.Update,
-    };
 
-    console.log(data)
-    dispatch(postdoctordata(data))
+    // let data = {
+    //   name: values.name,
+    //   email: values.email,
+    //   sallery: values.sallery,
+    //   post: values.post,
+    //   experience: values.experience,
+    //   upload: values.upload,
+    // };
+
+    dispatch(postdoctordata(values))
     setOpen(false);
     getData();
   };
@@ -79,7 +78,7 @@ function Doctor(props) {
     sallery: yup.string().required("Please enter sallery"),
     post: yup.string().required("Please enter Post"),
     experience: yup.string().required("Please enter experience"),
-    Update:yup.string().required(),
+    upload:yup.mixed().required(),
   });
 
   const formik = useFormik({
@@ -89,7 +88,7 @@ function Doctor(props) {
       sallery: "",
       post: "",
       experience: "",
-      Update: "",
+      upload: "",
     },
     validationSchema: schema,
     onSubmit: (values, { resetForm }) => {
@@ -327,18 +326,17 @@ function Doctor(props) {
                     {formik.errors.experience ? (
                       <p className="errors">{formik.errors.experience}</p>
                     ) : null}
-                    <TextField
+                    <input
                       autoFocus
                       margin="dense"
-                      id="Update"
-                      name="Update"
-                      value={formik.values.Update}
+                      id="uploadFile"
+                      label="upload File"
+                      name="upload"
                       type="file"
-                      variant="standard"
-                      onChange={formik.handleChange}
+                      onChange={(e)=>formik.setFieldValue('upload',e.target.files[0])}
                     />
-                    {formik.errors.Update ? (
-                      <p className="errors">{formik.errors.Update}</p>
+                    {formik.errors.upload ? (
+                      <p className="errors">{formik.errors.upload}</p>
                     ) : null}
                     <DialogActions>
                       <Button onClick={handleClose}>Cancel</Button>
