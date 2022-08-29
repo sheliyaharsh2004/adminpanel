@@ -1,9 +1,10 @@
 import { deletedoctordata, getdoctordata, postDoctor, updatedoctordata } from "../../commene/apis/doctor.api";
 import storade, { db } from "../../Firebase";
 import { collection, addDoc, getDocs, doc, deleteDoc, updateDoc } from "firebase/firestore"; 
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { BASE_URL } from "../../shared/baseurl";
 import * as Actiontype from "../ActionType";
+import storage from "../../Firebase";
 
 export const doctordata = () => async (dispatch) => {
 
@@ -28,6 +29,7 @@ export const postdoctordata = (data) => async (dispatch) => {
   try {
     dispatch(loadingdoctor());
     
+    const rendomste = Math.floor(Math.readom() * 1000000).toString();
     const storageRef = ref(storade, 'doctor/'+data.upload.name);
 
     uploadBytes(storageRef, data.upload).then((snapshot) => {
@@ -39,7 +41,8 @@ export const postdoctordata = (data) => async (dispatch) => {
             sallery: data.sallery,
             post: data.post,
             experience: data.experience,
-            url:url
+            url:url,
+            fileName: rendomste,
           });
 
           dispatch({
@@ -51,7 +54,8 @@ export const postdoctordata = (data) => async (dispatch) => {
               sallery: data.sallery,
               post: data.post,
               experience: data.experience,
-              url:url
+              url:url,
+              fileName: rendomste,
             }})
         })
       console.log('Uploaded a blob or file!');
@@ -64,14 +68,23 @@ export const postdoctordata = (data) => async (dispatch) => {
   }
 };
 
-export const deletedoctor = (id) => async (dispatch) => {
-  console.log(id);
+export const deletedoctor = (data) => async (dispatch) => {
+  console.log(data);
   try {
     dispatch(loadingdoctor())
 
-    await deleteDoc(doc(db, "doctor", id));
+    const doctorRef = ref(storage, 'doctor/'+ data.fileName);
+    deleteObject(doctorRef)
+    .then(async() => {
+      await deleteDoc(doc(db, "doctor", data.id));
+      dispatch({type: Actiontype.DELETE_DOCTOR, payload:data.id })
+    })
+    .catch((error) => {
+      dispatch(errordoctor(error.message));
+    });
 
-    dispatch({type: Actiontype.DELETE_DOCTOR, payload:id })
+    // await deleteDoc(doc(db, "doctor", id));
+    // dispatch({type: Actiontype.DELETE_DOCTOR, payload:id })
 
   } catch (error) {
     dispatch(errordoctor(error.message));

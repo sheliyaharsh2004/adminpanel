@@ -159,6 +159,14 @@ function Doctor(props) {
     { field: "sallery", headerName: "Sallery", width: 90 },
     { field: "post", headerName: "Post", width: 130 },
     { field: "experience", headerName: "experience", width: 100 },
+    { 
+      field: "url",
+      headerName: "Image",
+      width: 100,
+      renderCell: (params) => (
+        <img src={params.row.url}  width="50" height={50}/>
+      )
+    },
     {
       field: "delete",
       headerName: "Delete",
