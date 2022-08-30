@@ -41,7 +41,6 @@ function Doctor(props) {
   };
 
   const handleClickEditOpen = (params) => {
-    console.log(params.row);
     setdid(params.id);
     setOpen(true);
 
@@ -52,6 +51,7 @@ function Doctor(props) {
       sallery: params.row.sallery,
       post: params.row.post,
       experience: params.row.experience,
+      upload:params.row.url,
     });
     setUdate(true);
   };

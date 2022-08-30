@@ -15,7 +15,6 @@ export const doctordata = () => async (dispatch) => {
     let data = [];
     querySnapshot.forEach((doc) => {
       data.push({id:doc.id, ...doc.data()})
-      console.log(`${doc.id} => ${doc.data()}`);
     });
 
     dispatch({type: Actiontype.GET_DOCTOR, payload: data})
@@ -29,8 +28,8 @@ export const postdoctordata = (data) => async (dispatch) => {
   try {
     dispatch(loadingdoctor());
     
-    const rendomste = Math.floor(Math.readom() * 1000000).toString();
-    const storageRef = ref(storade, 'doctor/'+data.upload.name);
+    const rendomste = Math.floor(Math.random() * 1000000).toString();
+    const storageRef = ref(storade, 'doctor/'+rendomste);
 
     uploadBytes(storageRef, data.upload).then((snapshot) => {
       getDownloadURL(snapshot.ref)
@@ -93,18 +92,24 @@ export const deletedoctor = (data) => async (dispatch) => {
 
 export const updatedoctor = (data) => async (dispatch) => {
   try {
+    console.log(data);
     dispatch(loadingdoctor())
+    const updataRef = doc(db, "doctor", data.id);
+    if ( typeof data.upload === "string") {
+        await updateDoc(updataRef, {
+          name: data.name,
+          email: data.email,
+          sallery: data.sallery,
+          post: data.post,
+          experience: data.experience,
+          fileName: data.fileName,
+          upload: data.url
+        });
+        dispatch({type: Actiontype.UPDATE_DOCTOR, payload:data })
+    } else {
 
-    const washingtonRef = doc(db, "doctor", data.id);
-    await updateDoc(washingtonRef, {
-      name: data.name,
-      email: data.email,
-      sallery: data.sallery,
-      post: data.post,
-      experience: data.experience
-    });
+    }
 
-    dispatch({type: Actiontype.UPDATE_DOCTOR, payload:data })
     // setTimeout(function () {
     //   return updatedoctordata(data)
     //   .then((data) => dispatch({ type: Actiontype.UPDATE_DOCTOR, payload: data.data}))
