@@ -20,6 +20,8 @@ function Doctor(props) {
   const [Dopen, setDopen] = useState(false);
   const [did, setdid] = useState("");
   const [udate, setUdate] = useState(false);
+  const [uid , setUid] = useState('');
+  const [ufilename, setUfilename] = useState('')
   const [filterdata, setFilterdata] = useState([]);
   const [datamed, setDatamed] = useState([]);
   const dispatch = useDispatch();
@@ -41,23 +43,22 @@ function Doctor(props) {
   };
 
   const handleClickEditOpen = (params) => {
-    setdid(params.id);
     setOpen(true);
-
+    console.log(params)
     formik.setValues({
-      id: params.id,
       name: params.row.name,
       email: params.row.email,
       sallery: params.row.sallery,
       post: params.row.post,
       experience: params.row.experience,
-      upload:params.row.url,
+      url:params.row.url,
     });
+    setUid(params.row.id)
+    setUfilename(params.row.fileName)
     setUdate(true);
   };
 
   const handleSubmit = (values) => {
-
     // let data = {
     //   name: values.name,
     //   email: values.email,
@@ -66,7 +67,6 @@ function Doctor(props) {
     //   experience: values.experience,
     //   upload: values.upload,
     // };
-
     dispatch(postdoctordata(values))
     setOpen(false);
     getData();
@@ -78,7 +78,7 @@ function Doctor(props) {
     sallery: yup.string().required("Please enter sallery"),
     post: yup.string().required("Please enter Post"),
     experience: yup.string().required("Please enter experience"),
-    upload:yup.mixed().required(),
+    url:yup.mixed().required(),
   });
 
   const formik = useFormik({
@@ -88,7 +88,7 @@ function Doctor(props) {
       sallery: "",
       post: "",
       experience: "",
-      upload: "",
+      url: "",
     },
     validationSchema: schema,
     onSubmit: (values, { resetForm }) => {
@@ -102,7 +102,7 @@ function Doctor(props) {
   });
 
   const Updata = (values) => {
-
+    console.log(values)
     // let edituData = JSON.parse(localStorage.getItem("doctor"));
     // console.log(edituData);
 
@@ -117,7 +117,13 @@ function Doctor(props) {
 
     // localStorage.setItem("doctor", JSON.stringify(upadateData));
 
-    dispatch(updatedoctor(values))
+    const data ={
+      id:uid,
+      fileName:ufilename,
+      ...values
+    }
+
+    dispatch(updatedoctor(data))
 
     getData();
     setOpen(false);
@@ -337,14 +343,14 @@ function Doctor(props) {
                     <input
                       autoFocus
                       margin="dense"
-                      id="uploadFile"
-                      label="upload File"
-                      name="upload"
+                      id="url"
+                      label="url"
+                      name="url"
                       type="file"
-                      onChange={(e)=>formik.setFieldValue('upload',e.target.files[0])}
+                      onChange={(e)=>formik.setFieldValue('url',e.target.files[0])}
                     />
-                    {formik.errors.upload ? (
-                      <p className="errors">{formik.errors.upload}</p>
+                    {formik.errors.url ? (
+                      <p className="errors">{formik.errors.url}</p>
                     ) : null}
                     <DialogActions>
                       <Button onClick={handleClose}>Cancel</Button>
