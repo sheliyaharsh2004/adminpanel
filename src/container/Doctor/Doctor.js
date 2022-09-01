@@ -182,7 +182,7 @@ function Doctor(props) {
           <>
             <IconButton
               className="border-primary"
-              onClick={() => handleClickDopen(params.id)}
+              onClick={() => handleClickDopen(params.row)}
             >
               <DeleteIcon />
             </IconButton>

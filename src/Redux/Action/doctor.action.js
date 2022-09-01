@@ -126,7 +126,7 @@ export const updatedoctor = (data) => async (dispatch) => {
                   fileName: rendomste,
                   url: url
                 });
-                dispatch({ type: Actiontype.UPDATE_DOCTOR, payload:{...data, fileName: rendomste,url: url}})
+                dispatch({ type: Actiontype.UPDATE_DOCTOR, payload: { ...data, fileName: rendomste, url: url } })
               })
           })
         })
